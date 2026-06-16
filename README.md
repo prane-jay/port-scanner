@@ -35,7 +35,7 @@ pip install scapy tqdm colorama
 
 ---
 
-### OS Notes
+## OS Notes
 
 | Feature | Linux | macOS | Windows |
 |---|---|---|---|
@@ -64,7 +64,7 @@ python scanner.py --target <IP or hostname> --ports <start-end> [options]
 | `--ports` | Yes | Port range in format `START-END` (e.g. `1-1024`) |
 | `--mode` | No | Scan mode: `connect` (default) or `syn` |
 | `--threads` | No | Number of threads for connect mode (default: 100) |
-| `--output` | No | Save results to a JSON file (e.g. `results.json`) |
+| `--output` | No | Save JSON output to filename (e.g. `results.json`) |
 
 ### Examples
  
@@ -94,29 +94,31 @@ python scanner.py --target 192.168.1.1 --ports 1-65535 --threads 200
  
 ### Terminal
 ```
-Scanning ports on 127.0.0.1
-Ports  : 1-1024
-Mode   : connect
- 
-Scanning: 100%|████████████████| 1024/1024 [00:05<00:00, 198.4 port/s]
- 
-135/TCP epmap [OPEN]
-445/TCP microsoft-ds [OPEN]
- 
+Scanning ports on 192.168.1.1
+Ports  : 1-2048
+Mode   : syn
+
+Scanning: 100%|████████████████████████| 2048/2048 [00:25<00:00, 78.00port/s]
+
+53/TCP    domain      [OPEN]
+80/TCP    http        [OPEN]
+443/TCP   https       [OPEN]
+
 ---- Scan Complete ----
-2 Open  |  1022 Closed/Filtered
+3 Open  |  2045 Closed/Filtered
 ```
  
 ### JSON (`--output results.json`)
 ```json
 {
-  "target": "127.0.0.1",
-  "ports": "1-1024",
-  "mode": "connect",
+  "target": "192.168.1.1",
+  "ports": "1-2048",
+  "mode": "syn",
   "timestamp": "2025-01-15T14:32:10.123456",
   "open_ports": [
-    { "port": 135, "service": "epmap", "banner": "" },
-    { "port": 445, "service": "microsoft-ds", "banner": "" }
+    { "port": 53,  "service": "domain", "banner": "" },
+    { "port": 80,  "service": "http",   "banner": "" },
+    { "port": 443, "service": "https",  "banner": "" }
   ]
 }
 ```
@@ -133,13 +135,15 @@ Sends a raw TCP SYN packet using Scapy and inspects the response:
 - **SYN-ACK** → port is open, responds with RST to avoid completing the handshake
 - **RST-ACK** → port is closed
 - **No response** → port is filtered
+- 
 Port order is randomized to reduce detection likelihood. Requires root/Administrator privileges for raw socket access.
  
 ---
  
 ## Legal Disclaimer
  
-This tool is intended for use on systems you own or have explicit written permission to scan. Unauthorized port scanning may be illegal in your jurisdiction. The author assumes no liability for misuse of this software.
+This port scanner is intended for authorized security testing and educational purposes only. You are solely responsible for ensuring you have explicit permission from the system owner before scanning any network, host, or device. Unauthorized port scanning may violate local, state, federal, or international laws. The author of this tool accepts no liability for any misuse, damage, or legal consequences arising from its use. By using this software, you agree that you will only scan systems you own or have appropriate authorization to test.
+Use responsibly. Hack ethically.
  
 ---
 
