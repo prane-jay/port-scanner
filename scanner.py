@@ -16,6 +16,7 @@ lock = threading.Lock()
 width = os.get_terminal_size().columns
 init(autoreset=True)
 
+
 def connect_scan(host, port):
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -65,10 +66,10 @@ def syn_scan(host, port):
        with lock:
            open_ports.append((port,status,""))
            
-   
    elif tcp_flag == "RA": #RST-ACK - Port closed
        return "closed"
    
+
 def parse_ports(port_range):
 
     try:
@@ -81,6 +82,7 @@ def parse_ports(port_range):
         raise ValueError("Ports must be between 1-65535 and START must be <= END")
     
     return start, end
+
 
 def save_results(filepath, target, ports, mode, open_ports):
     
@@ -97,9 +99,9 @@ def save_results(filepath, target, ports, mode, open_ports):
 
     with open(filepath, "w") as f:
         json.dump(data, f, indent=2)
+        
     print()
     print(f"Results saved to {filepath}\n".center(width))
-
 
 
 def main():
@@ -160,8 +162,5 @@ def main():
     if args.output:
         save_results(args.output, args.target, args.ports, args.mode, open_ports)
 
-
 if __name__ == "__main__":
     main()
-
-
