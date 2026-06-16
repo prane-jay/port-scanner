@@ -17,6 +17,8 @@ A lightweight, multithreaded CLI TCP port scanner with SYN stealth scan, banner 
 
 ## Demo
 
+![Demo Screenshot](assets/demo.png)
+
 ---
 
 ## Requirements
