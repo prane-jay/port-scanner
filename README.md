@@ -135,7 +135,7 @@ Sends a raw TCP SYN packet using Scapy and inspects the response:
 - **SYN-ACK** → port is open, responds with RST to avoid completing the handshake
 - **RST-ACK** → port is closed
 - **No response** → port is filtered
-- 
+  
 Port order is randomized to reduce detection likelihood. Requires root/Administrator privileges for raw socket access.
  
 ---
